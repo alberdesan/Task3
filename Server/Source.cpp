@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <Eigen>
 
 // Need to link with Ws2_32.lib
 #pragma comment (lib, "Ws2_32.lib")
@@ -18,7 +19,8 @@
 #define DEFAULT_BUFLEN 1024
 #define DEFAULT_PORT "27015"
 
-using namespace std;
+//using namespace std;
+using namespace Eigen;
 
 int __cdecl main(void)
 {
@@ -66,7 +68,7 @@ int __cdecl main(void)
 	}
 
 	// Setup the TCP listening socket
-	iResult = bind(ListenSocket, result->ai_addr, (int)result->ai_addrlen);
+    iResult=bind(ListenSocket, result->ai_addr, (int)result->ai_addrlen);
 	if (iResult == SOCKET_ERROR) {
 		printf("bind failed with error: %d\n", WSAGetLastError());
 		freeaddrinfo(result);
@@ -111,7 +113,7 @@ int __cdecl main(void)
 			printf("Bytes received: %d\n", iResult);
 			// Echo the buffer back to the sender
 			for (i = 0; i < iResult; i++){
-				cout << recvbuf[i];
+				std::cout << recvbuf[i];
 				/*if (recvbuf[i] != ' '){
 					j = j + 1;
 				}
